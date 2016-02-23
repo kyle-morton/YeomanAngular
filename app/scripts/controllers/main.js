@@ -8,9 +8,17 @@
  * Controller of the mytodoApp
  */
 angular.module('mytodoApp')
-  .controller('MainCtrl', function ($scope, $filter) {
-    $scope.todos = [];
+  .controller('MainCtrl', function ($scope, localStorageService) {
+
+    //get todos from clients local storage
+    var todosInStore = localStorageService.get('todos');
+    $scope.todos = todosInStore || [];
     $scope.todo = "";
+    
+    //watch method keeps local storage in sync
+    $scope.$watch('todos', function(){
+      localStorageService.set('todos', $scope.todos)
+    }, true);
     
     $scope.addTodo = function(){
       //if inputted todo valid and not duplicate, push to array
