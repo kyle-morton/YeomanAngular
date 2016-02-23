@@ -8,16 +8,21 @@
  * Controller of the mytodoApp
  */
 angular.module('mytodoApp')
-  .controller('MainCtrl', function ($scope) {
+  .controller('MainCtrl', function ($scope, $filter) {
     $scope.todos = ['Item 1', 'Item 2', 'Item 3'];
     $scope.todo = "";
     
     $scope.addTodo = function(){
-      console.log("ScopeTodo: " + $scope.todo != null);
-      console.log("In array: " + $.inArray($scope.todo, $scope.todos));
+      //if inputted todo valid and not duplicate, push to array
       if ($scope.todo != null && ($.inArray($scope.todo, $scope.todos) == -1)){
         $scope.todos.push($scope.todo);
         $scope.todo = '';
       }
+    };
+    
+    $scope.removeTodo = function(index){
+      console.log("Removing: " + index);
+      $scope.todos.splice(index, 1);
     }
+    
   });
